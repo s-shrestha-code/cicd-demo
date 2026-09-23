@@ -18,7 +18,7 @@ jobs:
       - run: dotnet test --no-build \
         --collect:"XPlat Code Coverage" \
         -- DataCollectionRunSettings
-           .DataCollectors
-           .DataCollector
-           .Configuration
-           .Threshold=80
+          .DataCollectors
+          .DataCollector
+          .Configuration
+          .Threshold=80
