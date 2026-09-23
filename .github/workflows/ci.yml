@@ -21,4 +21,4 @@ jobs:
           .DataCollectors
           .DataCollector
           .Configuration
-          .Threshold=80
+          .Threshold=60
