@@ -15,3 +15,10 @@ jobs:
           dotnet-version: '8.0.x'
       - run: dotnet restore
       - run: dotnet build --no-restore
+      - run: dotnet test --no-build \
+        --collect:"XPlat Code Coverage" \
+        -- DataCollectionRunSettings
+          .DataCollectors
+          .DataCollector
+          .Configuration
+          .Threshold=80
