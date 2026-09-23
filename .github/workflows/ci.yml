@@ -33,3 +33,10 @@ jobs:
           COVERAGE=$(grep "Line coverage" coverage-report/Summary.txt | grep -oP '\d+\.\d+')
           echo "Coverage: $COVERAGE%"
           awk "BEGIN { exit ($COVERAGE < 40) }" || (echo "Coverage below 40%" && exit 1)
+          
+      - uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: xUnit Tests
+          path: '**/TestResults/**/*.xml'
+          reporter: dotnet-trx
