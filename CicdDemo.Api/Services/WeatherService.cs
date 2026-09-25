@@ -13,7 +13,7 @@
             "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         ];
 
-        public IEnumerable<WeatherForecast> GetForecast(int days = 5)
+        public IEnumerable<WeatherForecast> GetForecast(int days = 6)
         {
             return Enumerable.Range(1, days).Select(index =>
                 new WeatherForecast(
