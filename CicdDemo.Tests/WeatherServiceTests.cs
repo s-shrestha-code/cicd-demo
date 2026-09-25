@@ -11,10 +11,10 @@ namespace CicdDemo.Tests
         private readonly WeatherService _svc = new();
 
         [Fact]
-        public void GetForecast_DefaultDays_ReturnsFiveItems()
+        public void GetForecast_DefaultDays_ReturnsSixItems()
         {
             var result = _svc.GetForecast();
-            Assert.Equal(5, result.Count());
+            Assert.Equal(6, result.Count());
         }
 
         [Theory]
