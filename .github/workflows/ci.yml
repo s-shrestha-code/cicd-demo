@@ -86,11 +86,14 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment: development
     steps:
-      - name: Show environment
+      - name: Deploy to Development
+        env:
+          ConnectionStrings__Default: ${{ secrets.DB_CONNECTION_STRING }}
+          AppSettings__ApiKey: ${{ secrets.API_KEY }}
         run: |
           echo "Deploying to Development"
-          echo "DB=${{ secrets.DB_CONNECTION_STRING }}"
-          echo "API_KEY=${{ secrets.API_KEY }}"
+          echo "Connection string injected: $ConnectionStrings__Default"
+          echo "API key injected: $AppSettings__ApiKey"
 
   deploy-staging:
     runs-on: ubuntu-latest
@@ -98,11 +101,14 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment: staging
     steps:
-      - name: Show environment
+      - name: Deploy to Staging
+        env:
+          ConnectionStrings__Default: ${{ secrets.DB_CONNECTION_STRING }}
+          AppSettings__ApiKey: ${{ secrets.API_KEY }}
         run: |
           echo "Deploying to Staging"
-          echo "DB=${{ secrets.DB_CONNECTION_STRING }}"
-          echo "API_KEY=${{ secrets.API_KEY }}"
+          echo "Connection string injected: $ConnectionStrings__Default"
+          echo "API key injected: $AppSettings__ApiKey"
 
   deploy-production:
     runs-on: ubuntu-latest
@@ -110,8 +116,11 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment: production
     steps:
-      - name: Show environment
+      - name: Deploy to Production
+        env:
+          ConnectionStrings__Default: ${{ secrets.DB_CONNECTION_STRING }}
+          AppSettings__ApiKey: ${{ secrets.API_KEY }}
         run: |
           echo "Deploying to Production"
-          echo "DB=${{ secrets.DB_CONNECTION_STRING }}"
-          echo "API_KEY=${{ secrets.API_KEY }}"
+          echo "Connection string injected: $ConnectionStrings__Default"
+          echo "API key injected: $AppSettings__ApiKey"
