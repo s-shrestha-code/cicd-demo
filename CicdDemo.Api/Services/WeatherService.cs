@@ -13,24 +13,33 @@
             "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         ];
 
+        public IEnumerable<WeatherForecast> GetForecast(DateTime startDate, DateTime endDate)
+        {
+            var result = new List<WeatherForecast>();
+
+            DateTime _startDate = (startDate < endDate) ? startDate.Date : endDate.Date;
+            DateTime _endDate = (startDate < endDate) ? endDate.Date : startDate.Date;
+
+            for (var dt = _startDate; dt <= _endDate; dt = dt.AddDays(1))
+            {
+                result.Add(new WeatherForecast(
+                        DateOnly.FromDateTime(dt),
+                        Random.Shared.Next(-20, 55),
+                        Summaries[Random.Shared.Next(Summaries.Length)]
+                ));
+            }
+
+            return result;
+        }
+
         public IEnumerable<WeatherForecast> GetForecast(int days = 6)
         {
-            return Enumerable.Range(1, days).Select(index =>
-                new WeatherForecast(
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    Summaries[Random.Shared.Next(Summaries.Length)]
-                ));
+            return this.GetForecast(DateTime.Now.AddDays(1), DateTime.Now.AddDays(days));
         }
 
         public IEnumerable<WeatherForecast> GetHistoricalForecast(int days = 6)
         {
-            return Enumerable.Range(1, days).Select(index =>
-                new WeatherForecast(
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index * -1)),
-                    Random.Shared.Next(-20, 55),
-                    Summaries[Random.Shared.Next(Summaries.Length)]
-                ));
+            return this.GetForecast(DateTime.Now.AddDays(days * -1), DateTime.Now.AddDays(-1));
         }
     }
 }

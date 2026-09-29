@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using CicdDemo.Api.Services;
+﻿using CicdDemo.Api.Services;
 
 namespace CicdDemo.Tests
 {
@@ -11,6 +7,22 @@ namespace CicdDemo.Tests
         private readonly WeatherService _svc = new();
 
         #region Tests - GetForecast
+
+        [Fact]
+        public void GetForecast_EachForecast_HasRequestedDateOneTime()
+        {
+            var _startDate = DateTime.Today.Date;
+            var _endDate = DateTime.Today.AddDays(8).Date;
+
+            var dates = new List<DateTime>();
+            for (var dt = _startDate; dt <= _endDate; dt = dt.AddDays(1))
+            {
+                dates.Add(dt);
+            }
+
+            var result = _svc.GetForecast(_startDate, _endDate);
+            Assert.All(result, f => Assert.True(dates.Count(d => (DateOnly.FromDateTime(d.Date) == f.Date)) == 1));
+        }
 
         [Fact]
         public void GetForecast_DefaultDays_ReturnsSixItems()
