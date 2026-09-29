@@ -1,4 +1,4 @@
-﻿using CicdDemo.Api;
+﻿using CicdDemo.Api.Helpers;
 
 namespace CicdDemo.Tests
 {

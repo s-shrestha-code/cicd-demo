@@ -1,4 +1,4 @@
-﻿namespace CicdDemo.Api
+﻿namespace CicdDemo.Api.Helpers
 {
     public class AppSettings
     {

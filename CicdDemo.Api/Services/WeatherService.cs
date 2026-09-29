@@ -22,5 +22,15 @@
                     Summaries[Random.Shared.Next(Summaries.Length)]
                 ));
         }
+
+        public IEnumerable<WeatherForecast> GetHistoricalForecast(int days = 6)
+        {
+            return Enumerable.Range(1, days).Select(index =>
+                new WeatherForecast(
+                    DateOnly.FromDateTime(DateTime.Now.AddDays(index * -1)),
+                    Random.Shared.Next(-20, 55),
+                    Summaries[Random.Shared.Next(Summaries.Length)]
+                ));
+        }
     }
 }

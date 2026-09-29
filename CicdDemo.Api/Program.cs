@@ -1,9 +1,8 @@
-
-using CicdDemo.Api;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using Azure.Identity;
+using CicdDemo.Api.Helpers;
 using CicdDemo.Api.Services;
 using Microsoft.Extensions.Options;
-using Azure.Identity;
-using Azure.Extensions.AspNetCore.Configuration.Secrets;
 
 var builder = WebApplication.CreateBuilder(args);
 
