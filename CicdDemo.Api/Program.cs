@@ -2,8 +2,32 @@
 using CicdDemo.Api;
 using CicdDemo.Api.Services;
 using Microsoft.Extensions.Options;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add Key Vault configuration for non-development environments
+if (!builder.Environment.IsDevelopment())
+{
+    var keyVaultName = builder.Configuration["AZURE_KEYVAULT_NAME"]
+        ?? Environment.GetEnvironmentVariable("AZURE_KEYVAULT_NAME");
+
+    if (!string.IsNullOrEmpty(keyVaultName))
+    {
+        var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
+
+        builder.Configuration.AddAzureKeyVault(
+            keyVaultUri,
+            new DefaultAzureCredential(),
+            new AzureKeyVaultConfigurationOptions
+            {
+                // Key Vault uses -- for hierarchy, .NET maps it to :
+                // e.g. ConnectionStrings--Default → ConnectionStrings:Default
+                Manager = new KeyVaultSecretManager()
+            });
+    }
+}
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

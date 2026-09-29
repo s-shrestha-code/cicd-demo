@@ -116,11 +116,18 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment: production
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Inject Key Vault name into environment
+        run: echo "AZURE_KEYVAULT_NAME=${{ secrets.AZURE_KEYVAULT_NAME }}" >> $GITHUB_ENV
+
       - name: Deploy to Production
-        env:
-          ConnectionStrings__Default: ${{ secrets.DB_CONNECTION_STRING }}
-          AppSettings__ApiKey: ${{ secrets.API_KEY }}
         run: |
           echo "Deploying to Production"
-          echo "Connection string injected: $ConnectionStrings__Default"
-          echo "API key injected: $AppSettings__ApiKey"
+          echo "Key Vault: ${{ secrets.AZURE_KEYVAULT_NAME }}"
+          echo "App will read secrets from Key Vault at runtime"
