@@ -170,6 +170,7 @@ namespace CicdDemo.Tests
         private static Customer? GetTestCustomer()
         {
             var customers = SeedDatabase.GetTestCustomers();
+
             return customers.FirstOrDefault();
         }
     }
