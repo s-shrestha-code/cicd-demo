@@ -20,17 +20,17 @@
         //    }
         //}
 
-        //public static IList<Customer> GetTestCustomers()
-        //{
-        //    var customers = new List<Customer>();
+        public static IList<Customer> GetTestCustomers()
+        {
+            var customers = new List<Customer>();
 
-        //    customers.AddRange([
-        //        new Customer { Name = "Alice Smith", Email = "alice@example.com" },
-        //        new Customer { Name = "Bob Jones", Email = "bob@example.com" },
-        //        new Customer { Name = "Charlie Brown", Email = "charlie@example.com" }
-        //    ]);
+            customers.AddRange([
+                new Customer { Name = "Alice Smith", Email = "alice@example.com" },
+                new Customer { Name = "Bob Jones", Email = "bob@example.com" },
+                new Customer { Name = "Charlie Brown", Email = "charlie@example.com" }
+            ]);
 
-        //    return customers;
-        //}
+            return customers;
+        }
     }
 }

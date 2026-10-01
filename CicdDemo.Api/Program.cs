@@ -44,6 +44,8 @@ builder.Services.Configure<AppSettings>(
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseInMemoryDatabase("InMemoryDb")
+    //Tells Entity Framework Core to stop throwing exceptions or warnings when your code tries
+    //to use database transactions on an in-memory database provider, which does not natively support them
     .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning));
 });
 
