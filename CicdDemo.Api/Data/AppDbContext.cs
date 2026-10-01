@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace CicdDemo.Api.Data
-{ 
+{
     public class AppDbContext : DbContext
     {
         internal DbSet<HealthCheckLog> HealthCheckLogs => Set<HealthCheckLog>();
