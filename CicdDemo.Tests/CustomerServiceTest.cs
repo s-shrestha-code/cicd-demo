@@ -1,26 +1,13 @@
 ﻿using CicdDemo.Api.Data;
 using CicdDemo.Api.Data.Test;
 using CicdDemo.Api.Services;
+using CicdDemo.Tests.Helper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace CicdDemo.Tests
 {
     public class CustomerServiceTest
     {
-        private AppDbContext CreateDbContext()
-        {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                //Tells Entity Framework Core to stop throwing exceptions or warnings when your code tries
-                //to use database transactions on an in-memory database provider, which does not natively support them
-                .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
-                .Options;
-
-            return new AppDbContext(options);
-        }
-
         [Fact]
         public async Task CreateAndRead_Customer_Succeeds()
         {
@@ -28,12 +15,12 @@ namespace CicdDemo.Tests
 
             Assert.NotNull(newCustomer);
 
-            Customer created = null;
+            Customer? created = null;
             Customer? fetched = null;
 
             if (newCustomer != null)
             {
-                using var context = CreateDbContext();
+                using var context = TestHelper.CreateDbContext();
 
                 // Use a transaction so the test row is automatically cleaned up
                 var cancellationToken = new CancellationToken();
@@ -50,7 +37,7 @@ namespace CicdDemo.Tests
                     // 2. Rollback immediately to prevent database bloat
                     await transaction.RollbackAsync(cancellationToken);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Transaction auto-rolls back on failure/dispose if not committed
                 }
@@ -64,7 +51,7 @@ namespace CicdDemo.Tests
         [Fact]
         public async Task GetAllCustomersAsync_Succeeds()
         {
-            using var context = CreateDbContext();
+            using var context = TestHelper.CreateDbContext();
             var service = new CustomerService(context);
             var newCustomer = new Customer { Name = "John Doe", Email = "john@example.com" };
 
@@ -88,12 +75,12 @@ namespace CicdDemo.Tests
 
             Assert.NotNull(newCustomer);
 
-            Customer created = null;
+            Customer? created = null;
             Customer? fetched = null;
 
             if (newCustomer != null)
             {
-                using var context = CreateDbContext();
+                using var context = TestHelper.CreateDbContext();
 
                 // Use a transaction so the test row is automatically cleaned up
                 var cancellationToken = new CancellationToken();
@@ -112,7 +99,7 @@ namespace CicdDemo.Tests
                     // 2. Rollback immediately to prevent database bloat
                     await transaction.RollbackAsync(cancellationToken);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Transaction auto-rolls back on failure/dispose if not committed
                 }
@@ -131,12 +118,12 @@ namespace CicdDemo.Tests
 
             Assert.NotNull(newCustomer);
 
-            Customer created = null;
+            Customer? created = null;
             Customer? deleted = null;
 
             if (newCustomer != null)
             {
-                using var context = CreateDbContext();
+                using var context = TestHelper.CreateDbContext();
 
                 // Use a transaction so the test row is automatically cleaned up
                 var cancellationToken = new CancellationToken();
@@ -157,7 +144,7 @@ namespace CicdDemo.Tests
                     // 2. Rollback immediately to prevent database bloat
                     await transaction.RollbackAsync(cancellationToken);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Transaction auto-rolls back on failure/dispose if not committed
                 }

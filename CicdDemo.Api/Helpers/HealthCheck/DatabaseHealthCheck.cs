@@ -3,7 +3,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace CicdDemo.Api.Helpers.HealthCheck
 {
-    internal sealed class DatabaseHealthCheck : IHealthCheck
+    public sealed class DatabaseHealthCheck : IHealthCheck
     {
         private readonly AppDbContext _context;
 
