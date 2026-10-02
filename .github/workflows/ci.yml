@@ -58,9 +58,13 @@ jobs:
             -targetdir:"coverage-report" \
             -reporttypes:TextSummary
           cat coverage-report/Summary.txt
-          COVERAGE=$(grep "Line coverage" coverage-report/Summary.txt | grep -oP '\d+\.\d+')
+          COVERAGE=$(grep "Line coverage" coverage-report/Summary.txt | grep -oP '[\d]+\.?[\d]*(?=%)')
           echo "Coverage: $COVERAGE%"
-          awk "BEGIN { exit ($COVERAGE < 30) }" || (echo "Coverage below 30%" && exit 1)
+          if [ -z "$COVERAGE" ]; then
+            echo "Could not parse coverage value"
+            exit 1
+          fi
+          awk "BEGIN { exit ($COVERAGE < 40) }" || (echo "Coverage below 40%" && exit 1)
 
       - name: Log in to GHCR
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
