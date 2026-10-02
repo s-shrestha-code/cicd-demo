@@ -23,7 +23,7 @@ namespace CicdDemo.Tests
             var context = TestHelper.CreateDbContext();
 
             var databaseHealthCheck = new DatabaseHealthCheck(context);
-            Task<HealthCheckResult> result = databaseHealthCheck.CheckHealthAsync(null, new CancellationToken());
+            Task<HealthCheckResult> result = databaseHealthCheck.CheckHealthAsync(new HealthCheckContext(), new CancellationToken());
             Assert.NotNull(result);
         }
     }
