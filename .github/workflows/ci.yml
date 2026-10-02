@@ -39,7 +39,7 @@ jobs:
         run: dotnet format --verify-no-changes --verbosity diagnostic
 
       - name: Test with coverage
-        run: dotnet test --no-build --collect:"XPlat Code Coverage" -p:IsTestProject=true --logger "trx;LogFileName=test-results.trx"
+        run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger "trx;LogFileName=test-results.trx"
 
       - name: Test report
         uses: dorny/test-reporter@v1
