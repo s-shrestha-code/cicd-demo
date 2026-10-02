@@ -80,7 +80,8 @@ namespace CicdDemo.Tests
         public async Task UpdateCustomerAsync_Succeeds()
         {
             var newCustomer = GetTestCustomer();
-            var updateCustomerDetails = new Customer() { 
+            var updateCustomerDetails = new Customer()
+            {
                 Name = (newCustomer?.Name ?? "John Doe") + " The 2nd",
                 Email = (newCustomer?.Email ?? "John.doe@example.com").Replace(".com", ".edu")
             };
