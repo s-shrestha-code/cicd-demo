@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
+using System.Diagnostics.CodeAnalysis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -125,3 +126,7 @@ app.MapGet("/customers", async (CustomerService customerService) =>
 });
 
 app.Run();
+
+// Exclude Program from code coverage
+[ExcludeFromCodeCoverage]
+public partial class Program { }
